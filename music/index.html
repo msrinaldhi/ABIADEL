@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Wedding Invitation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #fff;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MUSIC -->
+  <audio id="bgMusic" loop preload="auto">
+    <!-- JIKA MP3 SATU FOLDER -->
+    <source src="karolina.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- CANVA WEBSITE -->
+  <iframe src="https://deliaaldhigetmerried.my.canva.site/dna"></iframe>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    let started = false;
+    let fade;
+
+    function fadeIn(target = 0.45) {
+      clearInterval(fade);
+      music.volume = 0;
+      music.play();
+
+      fade = setInterval(() => {
+        if (music.volume < target) {
+          music.volume = Math.min(music.volume + 0.01, target);
+        } else {
+          clearInterval(fade);
+        }
+      }, 120);
+    }
+
+    function fadeOut() {
+      clearInterval(fade);
+      fade = setInterval(() => {
+        if (music.volume > 0.02) {
+          music.volume -= 0.02;
+        } else {
+          music.pause();
+          clearInterval(fade);
+        }
+      }, 100);
+    }
+
+    function startOnce() {
+      if (started) return;
+      started = true;
+      fadeIn();
+    }
+
+    document.addEventListener("click", startOnce, { once: true });
+    document.addEventListener("touchstart", startOnce, { once: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        fadeOut();
+      } else if (started) {
+        fadeIn();
+      }
+    });
+  </script>
+
+</body>
+</html>
