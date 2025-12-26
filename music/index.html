@@ -2,17 +2,16 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Wedding Invitation</title>
+  <title>Wedding – Delia & Aldhi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       background: #fff;
+      overflow: hidden;
     }
-
     iframe {
       width: 100%;
       height: 100%;
@@ -22,66 +21,37 @@
 </head>
 <body>
 
-  <!-- MUSIC -->
+  <!-- Musik -->
   <audio id="bgMusic" loop preload="auto">
-  <source src="music/Karolina.mp3" type="audio/mpeg">
-</audio>
+    <source src="music/Karolina.mp3" type="audio/mpeg">
+  </audio>
 
-  <!-- CANVA WEBSITE -->
+  <!-- Iframe Canva -->
   <iframe src="https://deliaaldhigetmerried.my.canva.site/dna"></iframe>
 
   <script>
     const music = document.getElementById("bgMusic");
     let started = false;
-    let fade;
+    let fadeInterval;
 
-    function fadeIn(target = 0.45) {
-      clearInterval(fade);
+    function fadeInAudio() {
+      if (started) return;
+      started = true;
       music.volume = 0;
       music.play();
 
-      fade = setInterval(() => {
-        if (music.volume < target) {
-          music.volume = Math.min(music.volume + 0.01, target);
+      fadeInterval = setInterval(() => {
+        if (music.volume < 0.45) {
+          music.volume = Math.min(music.volume + 0.01, 0.45);
         } else {
-          clearInterval(fade);
+          clearInterval(fadeInterval);
         }
       }, 120);
     }
 
-    function fadeOut() {
-      clearInterval(fade);
-      fade = setInterval(() => {
-        if (music.volume > 0.02) {
-          music.volume -= 0.02;
-        } else {
-          music.pause();
-          clearInterval(fade);
-        }
-      }, 100);
-    }
-
-    function startOnce() {
-      if (started) return;
-      started = true;
-      fadeIn();
-    }
-
-    document.addEventListener("click", startOnce, { once: true });
-    document.addEventListener("touchstart", startOnce, { once: true });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        fadeOut();
-      } else if (started) {
-        fadeIn();
-      }
-    });
+    document.body.addEventListener("click", fadeInAudio, { once: true });
+    document.body.addEventListener("touchstart", fadeInAudio, { once: true });
   </script>
 
 </body>
 </html>
-
-
-
-
