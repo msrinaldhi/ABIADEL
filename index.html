@@ -9,8 +9,8 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: #fff;
       overflow: hidden;
+      background: #fff;
     }
 
     iframe {
@@ -19,7 +19,6 @@
       border: none;
     }
 
-    /* Tap layer */
     #tapLayer {
       position: fixed;
       inset: 0;
@@ -30,35 +29,32 @@
 </head>
 <body>
 
-  <!-- Musik -->
   <audio id="bgMusic" loop preload="auto">
     <source src="music/Karolina.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Canva -->
   <iframe src="https://deliaaldhigetmerried.my.canva.site/dna"></iframe>
 
-  <!-- Invisible Tap Layer -->
+  <!-- Layer buat nangkep tap pertama -->
   <div id="tapLayer"></div>
 
   <script>
     const music = document.getElementById("bgMusic");
     const tapLayer = document.getElementById("tapLayer");
 
-    tapLayer.addEventListener("click", () => {
+    function startMusic() {
       music.volume = 0;
       music.play();
 
-      let vol = 0;
+      let v = 0;
       const fade = setInterval(() => {
-        vol += 0.01;
-        music.volume = Math.min(vol, 0.45);
-        if (vol >= 0.45) clearInterval(fade);
+        v += 0.01;
+        music.volume = Math.min(v, 0.45);
+        if (v >= 0.45) clearInterval(fade);
       }, 120);
 
-      tapLayer.remove(); // hilang setelah tap
-    });
-  </script>
+      tapLayer.remove();
+    }
 
-</body>
-</html>
+    tapLayer.addEventListener("click", startMusic, { once: true });
+    tapLayer.addEv
